@@ -8,19 +8,19 @@ const useHandingOrdersService = function () {
       price: 87
   })
   orders.push({
-    no: "1234",
+    no: "123",
     name: "david",
     quantity: 2,
     price: 87
 })
 orders.push({
-    no: "1234",
+    no: "12",
     name: "david",
     quantity: 2,
     price: 87
 })
 orders.push({
-    no: "1234",
+    no: "1",
     name: "david",
     quantity: 2,
     price: 87

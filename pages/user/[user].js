@@ -57,5 +57,12 @@ const TextWrapper = styled.div`
   align-items: flex-start;
 `
 
+const sql = `
+select * from order
+inner join order_product as op on order.id = order.id 
+inner join product on product.id = op.product_id
+
+`
+
 
 

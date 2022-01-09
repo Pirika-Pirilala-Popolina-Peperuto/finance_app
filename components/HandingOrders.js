@@ -7,10 +7,28 @@ const HandingOrders = function ({ user: userId }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const sqlQuery = `SELECT * FROM orders where customer_id = '${userId}'`;
-    console.log(sqlQuery);
-    const url = `http://220.135.101.179/query?sql=${escape(sqlQuery)}`;
+    if(userId == undefined) return;
+    //const sqlQuery = `SELECT * FROM orders where customer_id = '${userId}'`;
+    //console.log(sqlQuery);
+    //const url = `http://220.135.101.179/query?sql=${escape(sqlQuery)}`;
 
+    // const url = 'http://220.135.101.179/query?sql=' + escape(`\
+    // SELECT products.*
+    // FROM products
+    // LEFT JOIN order_products
+    // ON order_products.product_id = products.id
+    // LEFT JOIN orders
+    // ON orders.id = order_products.order_id
+    // WHERE orders.customer_id = 'b6b60fbf-82be-44fc-9099-b72e9e26c812'`);
+
+    const url = `http://220.135.101.179/query?sql= 
+    SELECT products.* FROM products
+    INNER JOIN order_products ON order_products.product_id = products.id
+    INNER JOIN orders
+    ON orders.id = order_products.order_id
+    WHERE orders.customer_id = 'b6b60fbf-82be-44fc-9099-b72e9e26c812'
+    `
+    console.log(url)
     fetch(url)
       .then((response) => response.json())
       .then(([user]) => setUser(user));
@@ -41,7 +59,7 @@ const HandingOrders = function ({ user: userId }) {
 
 const renderOrderRows = function (order) {
   return (
-    <tr>
+    <tr key = {order.no} >
       <td>{order.no}</td>
       <td>{order.name}</td>
       <td>{order.quantity}</td>

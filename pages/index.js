@@ -7,8 +7,7 @@ import MainIncomes from "../components/MainIncomes";
 import PeriodIncomes from "../components/PeriodIncomes";
 import ChartWrapper from "../components/chartWrapper";
 
-export default function Home({posts}) {
-  console.log(posts[0]);
+export default function Home({ posts}) {
   return (
     <View >
       <TextWrapper>
@@ -31,8 +30,7 @@ export async function getStaticProps() {
   // You can use any data fetching library
   const res = await fetch("http://220.135.101.179/query?sql=SELECT * FROM orders where customer_id = 'b6b60fbf-82be-44fc-9099-b72e9e26c812'")
   const orders = await res.json()
-
-  //const order_product = 
+  const posts = orders;
 
   // By returning { props: { posts } }, the Blog component
   // will receive `posts` as a prop at build time
