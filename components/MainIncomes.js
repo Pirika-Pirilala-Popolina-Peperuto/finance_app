@@ -3,19 +3,37 @@ import Image from "next/image";
 import Chart from "./chart";
 import 'chart.js/auto';
 import { Line, Pie } from "react-chartjs-2";
+import useMainIncomesService from "../hooks/useMainIncomesService";
 
-const MainIncomes = function () {
-  return <MainIncomesPic></MainIncomesPic>;
+const MainIncomes = function ({user: userId} ) {
+  
+  return <MainIncomesPic userId = {userId}></MainIncomesPic>;
 };
 
-const MainIncomesPic = function () {
+const MainIncomesPic = function ({userId}) {
+  //console.log(userId);
+  var orders = useMainIncomesService(userId)
+  console.log(orders);
+  if(orders.length >= 3) orders = orders.slice(0,3);
+  console.log(orders);
+
+  var labels = orders.map(order => order.name);
+  var labels = labels.slice(0, orders.length);
+
+  var colors = ["#FF6384", "#36A2EB", "#FFCE56"];
+  var colors = colors.slice(0, orders.length);
+
+  var price = orders.map(order => order.price);
+  //console.log(price)
+
+  //console.log(labels);
   const data = {
-    labels: ["Red", "Blue", "Yellow"],
+    labels: labels,
     datasets: [
       {
-        data: [300, 50, 100],
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+        data: price,
+        backgroundColor: colors,
+        hoverBackgroundColor: colors,
       },
     ],
   };
@@ -23,7 +41,7 @@ const MainIncomesPic = function () {
 
   return (
     <Chart>
-      <h2>pie chart</h2>
+      <h2>購買金額圓餅圖</h2>
       <Pie data={data} width={400} height={400} />
     </Chart>
   );

@@ -1,42 +1,10 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import useHandingOrdersService from "../hooks/useHandingOrdersService";
+
 const HandingOrders = function ({ user: userId }) {
-  //const data =  getOrderData();
-  console.log(userId);
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    if(userId == undefined) return;
-    //const sqlQuery = `SELECT * FROM orders where customer_id = '${userId}'`;
-    //console.log(sqlQuery);
-    //const url = `http://220.135.101.179/query?sql=${escape(sqlQuery)}`;
-
-    // const url = 'http://220.135.101.179/query?sql=' + escape(`\
-    // SELECT products.*
-    // FROM products
-    // LEFT JOIN order_products
-    // ON order_products.product_id = products.id
-    // LEFT JOIN orders
-    // ON orders.id = order_products.order_id
-    // WHERE orders.customer_id = 'b6b60fbf-82be-44fc-9099-b72e9e26c812'`);
-
-    const url = `http://220.135.101.179/query?sql= 
-    SELECT products.* FROM products
-    INNER JOIN order_products ON order_products.product_id = products.id
-    INNER JOIN orders
-    ON orders.id = order_products.order_id
-    WHERE orders.customer_id = 'b6b60fbf-82be-44fc-9099-b72e9e26c812'
-    `
-    console.log(url)
-    fetch(url)
-      .then((response) => response.json())
-      .then(([user]) => setUser(user));
-  }, [userId]);
-
-  console.log(user);
-
-  const { orders } = useHandingOrdersService();
+  const orders =  useHandingOrdersService(userId);
+  
   const rows = orders.map(renderOrderRows);
 
   return (
@@ -49,6 +17,7 @@ const HandingOrders = function ({ user: userId }) {
             <th>商品名稱</th>
             <th>商品數量</th>
             <th>商品價錢</th>
+            <th>商品備註</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>
@@ -59,11 +28,12 @@ const HandingOrders = function ({ user: userId }) {
 
 const renderOrderRows = function (order) {
   return (
-    <tr key = {order.no} >
-      <td>{order.no}</td>
+    <tr key = {order.id} >
+      <td>{order.id}</td>
       <td>{order.name}</td>
-      <td>{order.quantity}</td>
+      <td>1</td>
       <td>{order.price}</td>
+      <td>{order.remark}</td>
     </tr>
   );
 };
@@ -80,9 +50,14 @@ const OrdersTable = styled.table`
 
   }
 
-  td:nth-of-type(1),
+  td:nth-of-type(1){
+    width: 250px;
+    
+  }
+
   td:nth-of-type(3),
-  td:nth-of-type(4) {
+  td:nth-of-type(4),
+  td:nth-of-type(5) {
     width: 100px;
     
   }
@@ -96,7 +71,9 @@ const OrdersTable = styled.table`
   td:nth-of-type(3),
   td:nth-of-type(4),
   th:nth-of-type(3),
-  th:nth-of-type(4) {
+  th:nth-of-type(4),
+  th:nth-of-type(5),
+  td:nth-of-type(5) {
     text-align: right;
   }
 

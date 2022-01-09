@@ -19,10 +19,9 @@ export default function Home() {
         <HandingOrders user = {user}></HandingOrders>
       </TextWrapper>
       <ChartWrapper>
-        <Title>David</Title>
-        <MainIncomes></MainIncomes>
-        <PeriodIncomes></PeriodIncomes>
-        <PeriodIncomes></PeriodIncomes>
+        <Title>消費統計</Title>
+        <MainIncomes user = {user}></MainIncomes>
+        <PeriodIncomes user = {user}></PeriodIncomes>
       </ChartWrapper>
 
     </View>
