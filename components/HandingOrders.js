@@ -1,10 +1,26 @@
 import styled from "@emotion/styled";
+import { useEffect, useState } from "react";
 import useHandingOrdersService from "../hooks/useHandingOrdersService";
+const HandingOrders = function ({ user: userId }) {
+  //const data =  getOrderData();
+  console.log(userId);
+  const [user, setUser] = useState(null);
 
-const HandingOrders = function () {
-  //const {test} = test_grcp();
+  useEffect(() => {
+    const sqlQuery = `SELECT * FROM orders where customer_id = '${userId}'`;
+    console.log(sqlQuery);
+    const url = `http://220.135.101.179/query?sql=${escape(sqlQuery)}`;
+
+    fetch(url)
+      .then((response) => response.json())
+      .then(([user]) => setUser(user));
+  }, [userId]);
+
+  console.log(user);
+
   const { orders } = useHandingOrdersService();
   const rows = orders.map(renderOrderRows);
+
   return (
     <OrdersTableWrapper className="cssHandingOrders">
       <h2>Order</h2>

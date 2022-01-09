@@ -2,17 +2,21 @@ import React from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import styled from "@emotion/styled";
-import HandingOrders from "../components/HandingOrders";
-import MainIncomes from "../components/MainIncomes";
-import PeriodIncomes from "../components/PeriodIncomes";
-import ChartWrapper from "../components/chartWrapper";
+import HandingOrders from "../../components/HandingOrders";
+import MainIncomes from "../../components/MainIncomes";
+import PeriodIncomes from "../../components/PeriodIncomes";
+import ChartWrapper from "../../components/chartWrapper";
+import { useRouter } from 'next/router'
+import handler from '../api/hello';
 
-export default function Home({posts}) {
-  console.log(posts[0]);
+export default function Home() {
+  const router = useRouter()
+  const { user } = router.query
+
   return (
     <View >
       <TextWrapper>
-        <HandingOrders></HandingOrders>
+        <HandingOrders user = {user}></HandingOrders>
       </TextWrapper>
       <ChartWrapper>
         <Title>David</Title>
@@ -23,24 +27,6 @@ export default function Home({posts}) {
 
     </View>
   )
-}
-
-
-export async function getStaticProps() {
-  // Call an external API endpoint to get posts.
-  // You can use any data fetching library
-  const res = await fetch("http://220.135.101.179/query?sql=SELECT * FROM orders where customer_id = 'b6b60fbf-82be-44fc-9099-b72e9e26c812'")
-  const orders = await res.json()
-
-  //const order_product = 
-
-  // By returning { props: { posts } }, the Blog component
-  // will receive `posts` as a prop at build time
-  return {
-    props: {
-      posts,
-    },
-  }
 }
 
 const Title = styled.div`

@@ -11,7 +11,11 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@grpc/proto-loader": "^0.6.9",
+    "@improbable-eng/grpc-web": "^0.15.0",
+    "@improbable-eng/grpc-web-node-http-transport": "^0.15.0",
     "chart.js": "^3.7.0",
+    "grpc-web-node-http-transport": "^0.0.1",
     "next": "11.1.2",
     "react": "17.0.2",
     "react-chartjs-2": "^4.0.0",
