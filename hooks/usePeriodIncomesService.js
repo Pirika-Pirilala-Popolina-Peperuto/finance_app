@@ -22,7 +22,7 @@ const usePeriodIncomesService = function (userId) {
         INNER JOIN order_products ON order_products.product_id = products.id
         INNER JOIN orders
         ON orders.id = order_products.order_id
-        WHERE orders.customer_id = 'b6b60fbf-82be-44fc-9099-b72e9e26c812'
+        WHERE orders.customer_id = '${userId}'
         GROUP BY DATE(created_at)
 
         `
